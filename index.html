@@ -20,6 +20,8 @@
             color: #1e2937;
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
             transition: all 0.4s;
         }
 
@@ -31,6 +33,9 @@
         .container {
             max-width: 1100px;
             margin: 0 auto;
+            flex: 1;                    /* This pushes footer to bottom */
+            display: flex;
+            flex-direction: column;
         }
 
         header {
@@ -52,6 +57,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
+            flex: 1;                    /* Takes available space */
         }
 
         @media (min-width: 992px) {
@@ -135,7 +141,6 @@
             border-color: #3b82f6;
         }
 
-        /* Round Color Pickers */
         .color-options {
             display: flex;
             gap: 20px;
@@ -156,8 +161,8 @@
         }
 
         .color-input {
-            width: 45px;
-            height: 45px;
+            width: 55px;
+            height: 55px;
             border: none;
             border-radius: 50%;
             cursor: pointer;
@@ -237,11 +242,19 @@
             margin-top: 25px;
         }
 
-        .footer {
+        /* Fixed Footer */
+        footer {
+            margin-top: auto;           /* Pushes footer to bottom */
             text-align: center;
-            margin-top: 90px;
+            padding: 40px 0;
             color: #64748b;
             font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .dark footer {
+            color: #94a3b8;
+            border-top-color: #334155;
         }
     </style>
 </head>
@@ -281,7 +294,6 @@
                     </div>
                 </div>
 
-                <!-- Tabs Content -->
                 <div id="url" class="tab-content active">
                     <input type="url" id="input_url" placeholder="https://example.com">
                 </div>
@@ -317,7 +329,7 @@
                 </button>
             </div>
 
-            <!-- Right Side - Preview -->
+            <!-- Right Side -->
             <div class="preview-area">
                 <div id="qrcode"></div>
                 
@@ -340,7 +352,8 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <!-- Fixed Footer -->
+    <footer>
         Application by <strong style="color:#3b82f6;">Subir Datta</strong>
     </footer>
 
@@ -351,10 +364,8 @@
 
         function openTab(evt, tabName) {
             currentTab = tabName;
-
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-
             document.getElementById(tabName).classList.add('active');
             evt.currentTarget.classList.add('active');
         }
@@ -363,9 +374,7 @@
             let data = "";
 
             switch(currentTab) {
-                case 'url':
-                    data = document.getElementById('input_url').value.trim();
-                    break;
+                case 'url': data = document.getElementById('input_url').value.trim(); break;
                 case 'wifi':
                     const ssid = document.getElementById('wifi_ssid').value.trim();
                     const pass = document.getElementById('wifi_pass').value.trim();
@@ -435,11 +444,9 @@
             }
         }
 
-        // ================== NEW SHARE FUNCTION ==================
         async function shareQR() {
             const img = document.querySelector('#qrcode img');
             if (!img) return;
-
             try {
                 const response = await fetch(img.src);
                 const blob = await response.blob();
@@ -455,11 +462,9 @@
                     alert("Sharing is not supported on this browser.");
                 }
             } catch (error) {
-                console.error('Share failed:', error);
                 alert("Failed to share QR Code.");
             }
         }
-        // =======================================================
 
         // Theme Toggle
         document.getElementById('themeToggle').addEventListener('click', () => {
