@@ -8,7 +8,11 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8fafc;
@@ -50,7 +54,9 @@
             flex: 1;
         }
         @media (min-width: 992px) {
-            .main-grid { grid-template-columns: 1fr 1fr; }
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
         .card {
             background: white;
@@ -66,25 +72,29 @@
         .tabs {
             display: flex;
             flex-wrap: wrap;
-            gap: 18px;
+            gap: 16px;
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 15px;
             margin-bottom: 25px;
             overflow-x: auto;
         }
-        .dark .tabs { border-color: #334155; }
+        .dark .tabs {
+            border-color: #334155;
+        }
         .tab-btn {
             background: none;
             border: none;
             font-size: 16px;
             font-weight: 600;
-            padding: 8px 18px;
+            padding: 8px 16px;
             cursor: pointer;
             color: #64748b;
             position: relative;
             white-space: nowrap;
         }
-        .dark .tab-btn { color: #94a3b8; }
+        .dark .tab-btn {
+            color: #94a3b8;
+        }
         .tab-btn.active {
             color: #3b82f6;
         }
@@ -120,8 +130,16 @@
             margin-bottom: 25px;
             flex-wrap: wrap;
         }
-        .color-group { display: flex; align-items: center; gap: 10px; }
-        .color-label { font-weight: 600; font-size: 15px; min-width: 110px; }
+        .color-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .color-label {
+            font-weight: 600;
+            font-size: 15px;
+            min-width: 110px;
+        }
         .color-input {
             width: 55px;
             height: 55px;
@@ -132,12 +150,33 @@
             background: white;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .dark .color-input { background: #334155; }
-        .color-input::-webkit-color-swatch { border: none; border-radius: 50%; }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
+        .dark .color-input {
+            background: #334155;
+        }
+        .color-input::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
+        .file-upload {
+            border: 2px dashed #94a3b8;
+            border-radius: 14px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .file-upload:hover {
+            background: #f1f5f9;
+        }
+        .dark .file-upload:hover {
+            background: #334155;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
         #qrcode img {
             border: 14px solid white;
             border-radius: 20px;
@@ -212,6 +251,7 @@
         </header>
 
         <div class="main-grid">
+            <!-- Left Side - Form -->
             <div class="card">
                 <div class="tabs">
                     <button class="tab-btn active" onclick="openTab(event, 'url')">Link</button>
@@ -223,6 +263,10 @@
                     <button class="tab-btn" onclick="openTab(event, 'phone')">Phone</button>
                     <button class="tab-btn" onclick="openTab(event, 'location')">Location</button>
                     <button class="tab-btn" onclick="openTab(event, 'event')">Event</button>
+                    <button class="tab-btn" onclick="openTab(event, 'image')">Image</button>
+                    <button class="tab-btn" onclick="openTab(event, 'video')">Video</button>
+                    <button class="tab-btn" onclick="openTab(event, 'facebook')">Facebook</button>
+                    <button class="tab-btn" onclick="openTab(event, 'whatsapp')">WhatsApp</button>
                 </div>
 
                 <div class="color-options">
@@ -236,11 +280,12 @@
                     </div>
                 </div>
 
-                <!-- Tabs Content -->
+                <!-- Link Tab -->
                 <div id="url" class="tab-content active">
                     <input type="url" id="input_url" placeholder="https://example.com">
                 </div>
 
+                <!-- WiFi Tab -->
                 <div id="wifi" class="tab-content">
                     <input type="text" id="wifi_ssid" placeholder="Network Name (SSID)">
                     <input type="password" id="wifi_pass" placeholder="Password">
@@ -251,6 +296,7 @@
                     </select>
                 </div>
 
+                <!-- Contact Tab -->
                 <div id="vcard" class="tab-content">
                     <input type="text" id="vc_name" placeholder="Full Name">
                     <input type="tel" id="vc_phone" placeholder="Phone Number">
@@ -258,31 +304,37 @@
                     <input type="text" id="vc_company" placeholder="Company">
                 </div>
 
+                <!-- Text Tab -->
                 <div id="text" class="tab-content">
                     <textarea id="input_text" rows="5" placeholder="Enter your text here..."></textarea>
                 </div>
 
+                <!-- SMS Tab -->
                 <div id="sms" class="tab-content">
                     <input type="tel" id="sms_phone" placeholder="Phone Number">
                     <textarea id="sms_msg" rows="3" placeholder="Message"></textarea>
                 </div>
 
+                <!-- Email Tab -->
                 <div id="email" class="tab-content">
                     <input type="email" id="email_address" placeholder="Receiver Email">
                     <input type="text" id="email_subject" placeholder="Subject (Optional)">
                     <textarea id="email_body" rows="4" placeholder="Message (Optional)"></textarea>
                 </div>
 
+                <!-- Phone Tab -->
                 <div id="phone" class="tab-content">
                     <input type="tel" id="phone_number" placeholder="Phone Number with country code">
                 </div>
 
+                <!-- Location Tab -->
                 <div id="location" class="tab-content">
                     <input type="text" id="location_address" placeholder="Address or Place Name">
                     <input type="text" id="latitude" placeholder="Latitude (Optional)">
                     <input type="text" id="longitude" placeholder="Longitude (Optional)">
                 </div>
 
+                <!-- Event Tab -->
                 <div id="event" class="tab-content">
                     <input type="text" id="event_title" placeholder="Event Title *">
                     <input type="datetime-local" id="event_start">
@@ -291,12 +343,45 @@
                     <textarea id="event_desc" rows="3" placeholder="Description (Optional)"></textarea>
                 </div>
 
+                <!-- Image Tab with Upload -->
+                <div id="image" class="tab-content">
+                    <input type="url" id="image_url" placeholder="Image URL[](https://example.com/photo.jpg)">
+                    <div class="file-upload" id="imageUploadArea">
+                        <i data-lucide="upload" style="width:40px;height:40px;color:#64748b;"></i>
+                        <p style="margin:12px 0 6px; font-weight:500;">Or Upload Image</p>
+                        <p style="font-size:13px; color:#64748b;">PNG, JPG, JPEG (Max 5MB)</p>
+                        <input type="file" id="imageFile" accept="image/*" style="display:none;">
+                    </div>
+                </div>
+
+                <!-- Video Tab with Upload -->
+                <div id="video" class="tab-content">
+                    <input type="url" id="video_url" placeholder="Video URL (YouTube or direct link)">
+                    <div class="file-upload" id="videoUploadArea">
+                        <i data-lucide="upload" style="width:40px;height:40px;color:#64748b;"></i>
+                        <p style="margin:12px 0 6px; font-weight:500;">Or Upload Video</p>
+                        <p style="font-size:13px; color:#64748b;">MP4 (Small size recommended)</p>
+                        <input type="file" id="videoFile" accept="video/*" style="display:none;">
+                    </div>
+                </div>
+
+                <!-- Facebook Tab -->
+                <div id="facebook" class="tab-content">
+                    <input type="url" id="fb_url" placeholder="https://facebook.com/username">
+                </div>
+
+                <!-- WhatsApp Tab -->
+                <div id="whatsapp" class="tab-content">
+                    <input type="tel" id="wa_number" placeholder="WhatsApp Number (with country code)">
+                    <textarea id="wa_message" rows="3" placeholder="Message (Optional)"></textarea>
+                </div>
+
                 <button onclick="generateQR()" class="btn btn-primary">
                     Generate QR Code
                 </button>
             </div>
 
-            <!-- Preview Area -->
+            <!-- Right Side - Preview -->
             <div class="preview-area">
                 <div id="qrcode"></div>
                 
@@ -331,9 +416,44 @@
             currentTab = tabName;
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
             document.getElementById(tabName).classList.add('active');
             evt.currentTarget.classList.add('active');
+        }
+
+        // File Upload Setup
+        function setupFileUploads() {
+            // Image Upload
+            const imageArea = document.getElementById('imageUploadArea');
+            const imageInput = document.getElementById('imageFile');
+            imageArea.addEventListener('click', () => imageInput.click());
+            imageInput.addEventListener('change', (e) => handleFileUpload(e, 'image'));
+
+            // Video Upload
+            const videoArea = document.getElementById('videoUploadArea');
+            const videoInput = document.getElementById('videoFile');
+            videoArea.addEventListener('click', () => videoInput.click());
+            videoInput.addEventListener('change', (e) => handleFileUpload(e, 'video'));
+        }
+
+        function handleFileUpload(e, type) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert("File is too large! Maximum size is 5MB.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                if (type === 'image') {
+                    document.getElementById('image_url').value = event.target.result;
+                } else {
+                    document.getElementById('video_url').value = event.target.result;
+                }
+                alert(type.toUpperCase() + " uploaded successfully!");
+            };
+            reader.readAsDataURL(file);
         }
 
         function generateQR() {
@@ -343,14 +463,12 @@
                 case 'url':
                     data = document.getElementById('input_url').value.trim();
                     break;
-
                 case 'wifi':
                     const ssid = document.getElementById('wifi_ssid').value.trim();
                     const pass = document.getElementById('wifi_pass').value.trim();
                     const enc = document.getElementById('wifi_enc').value;
                     data = `WIFI:S:${ssid};T:${enc};P:${pass};;`;
                     break;
-
                 case 'vcard':
                     const name = document.getElementById('vc_name').value.trim();
                     const phone = document.getElementById('vc_phone').value.trim();
@@ -358,62 +476,63 @@
                     const company = document.getElementById('vc_company').value.trim();
                     data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${company}\nEND:VCARD`;
                     break;
-
                 case 'text':
                     data = document.getElementById('input_text').value.trim();
                     break;
-
                 case 'sms':
                     const smsPhone = document.getElementById('sms_phone').value.trim();
                     const smsMsg = document.getElementById('sms_msg').value.trim();
                     data = `SMSTO:${smsPhone}:${smsMsg}`;
                     break;
-
                 case 'email':
                     const e = document.getElementById('email_address').value.trim();
-                    if (!e) { alert("Please enter email address!"); return; }
+                    if (!e) return alert("Please enter email address!");
                     const sub = document.getElementById('email_subject').value.trim();
                     const body = document.getElementById('email_body').value.trim();
                     data = `mailto:${e}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
                     break;
-
                 case 'phone':
                     const p = document.getElementById('phone_number').value.trim();
-                    if (!p) { alert("Please enter phone number!"); return; }
+                    if (!p) return alert("Please enter phone number!");
                     data = `tel:${p}`;
                     break;
-
                 case 'location':
                     const addr = document.getElementById('location_address').value.trim();
                     const lat = document.getElementById('latitude').value.trim();
                     const lon = document.getElementById('longitude').value.trim();
-                    if (!addr && !(lat && lon)) {
-                        alert("Please enter address or coordinates!");
-                        return;
-                    }
+                    if (!addr && !(lat && lon)) return alert("Please enter address or coordinates!");
                     data = (lat && lon) ? `geo:${lat},${lon}` : `https://maps.google.com/?q=${encodeURIComponent(addr)}`;
                     break;
-
                 case 'event':
                     const title = document.getElementById('event_title').value.trim();
                     const start = document.getElementById('event_start').value;
-                    if (!title || !start) {
-                        alert("Event Title and Start time are required!");
-                        return;
-                    }
+                    if (!title || !start) return alert("Event Title and Start time are required!");
                     const end = document.getElementById('event_end').value || start;
                     const venue = document.getElementById('event_location').value.trim();
                     const desc = document.getElementById('event_desc').value.trim();
-
-                    const startFormatted = start.replace(/[-:]/g, '') + "00";
-                    const endFormatted = end.replace(/[-:]/g, '') + "00";
-
-                    data = `BEGIN:VEVENT\nSUMMARY:${title}\nDTSTART:${startFormatted}\nDTEND:${endFormatted}\nLOCATION:${venue}\nDESCRIPTION:${desc}\nEND:VEVENT`;
+                    const startF = start.replace(/[-:]/g, '') + "00";
+                    const endF = end.replace(/[-:]/g, '') + "00";
+                    data = `BEGIN:VEVENT\nSUMMARY:${title}\nDTSTART:${startF}\nDTEND:${endF}\nLOCATION:${venue}\nDESCRIPTION:${desc}\nEND:VEVENT`;
+                    break;
+                case 'image':
+                    data = document.getElementById('image_url').value.trim();
+                    break;
+                case 'video':
+                    data = document.getElementById('video_url').value.trim();
+                    break;
+                case 'facebook':
+                    data = document.getElementById('fb_url').value.trim();
+                    break;
+                case 'whatsapp':
+                    const waNum = document.getElementById('wa_number').value.trim();
+                    const waMsg = document.getElementById('wa_message').value.trim();
+                    if (!waNum) return alert("Please enter WhatsApp number!");
+                    data = `https://wa.me/${waNum.replace(/\D/g,'')}?text=${encodeURIComponent(waMsg)}`;
                     break;
             }
 
             if (!data) {
-                alert("Please fill the required fields!");
+                alert("Please enter data or upload a file!");
                 return;
             }
 
@@ -468,7 +587,7 @@
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({ files: [file], title: 'My QR Code' });
                 } else {
-                    alert("Sharing not supported on this device.");
+                    alert("Sharing is not supported on this device.");
                 }
             } catch (error) {
                 alert("Failed to share QR Code.");
@@ -481,7 +600,11 @@
             lucide.createIcons();
         });
 
-        window.onload = () => lucide.createIcons();
+        // Initialize everything
+        window.onload = () => {
+            lucide.createIcons();
+            setupFileUploads();
+        };
     </script>
 </body>
 </html>
