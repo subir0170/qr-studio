@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Studio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #1e2937;
+            min-height: 100vh;
+            padding: 20px;
+            transition: all 0.4s;
+        }
+
+        .dark body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .dark .card {
+            background: #1e2937;
+            border-color: #334155;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .dark .tabs {
+            border-color: #334155;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 20px;
+            cursor: pointer;
+            color: #64748b;
+            position: relative;
+        }
+
+        .dark .tab-btn {
+            color: #94a3b8;
+        }
+
+        .tab-btn.active {
+            color: #3b82f6;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #3b82f6;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .dark input, .dark select, .dark textarea {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        /* Round Color Pickers */
+        .color-options {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .color-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-label {
+            font-weight: 600;
+            font-size: 15px;
+            min-width: 110px;
+        }
+
+        .color-input {
+            width: 55px;
+            height: 55px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 4px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .color-input {
+            background: #334155;
+        }
+
+        .color-input::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        #qrcode img {
+            border: 14px solid white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .preview-area {
+            background: #f1f5f9;
+            border: 3px dashed #cbd5e1;
+            border-radius: 24px;
+            padding: 50px 30px;
+            min-height: 440px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dark .preview-area {
+            background: #1e2937;
+            border-color: #475569;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .btn-primary:hover { background: #2563eb; }
+
+        .action-buttons {
+            display: none;
+            gap: 10px;
+            width: 100%;
+            max-width: 340px;
+            margin-top: 25px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #64748b;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i data-lucide="qr-code" style="width: 34px; height: 34px; color: #3b82f6;"></i>
+                QR Studio
+            </div>
+            <button id="themeToggle" class="btn" style="background:#e2e8f0; color:#1e2937; padding:12px 16px;">
+                <i data-lucide="sun" class="hidden dark:block"></i>
+                <i data-lucide="moon" class="block dark:hidden"></i>
+            </button>
+        </header>
+
+        <div class="main-grid">
+            
+            <!-- Left Side -->
+            <div class="card">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="openTab(event, 'url')">Link</button>
+                    <button class="tab-btn" onclick="openTab(event, 'wifi')">WiFi</button>
+                    <button class="tab-btn" onclick="openTab(event, 'vcard')">Contact</button>
+                    <button class="tab-btn" onclick="openTab(event, 'text')">Text</button>
+                    <button class="tab-btn" onclick="openTab(event, 'sms')">SMS</button>
+                </div>
+
+                <div class="color-options">
+                    <div class="color-group">
+                        <span class="color-label">QR Color:</span>
+                        <input type="color" id="qrColor" value="#000000" class="color-input">
+                    </div>
+                    <div class="color-group">
+                        <span class="color-label">BG Color:</span>
+                        <input type="color" id="bgColor" value="#ffffff" class="color-input">
+                    </div>
+                </div>
+
+                <!-- Tabs Content -->
+                <div id="url" class="tab-content active">
+                    <input type="url" id="input_url" placeholder="https://example.com">
+                </div>
+
+                <div id="wifi" class="tab-content">
+                    <input type="text" id="wifi_ssid" placeholder="Network Name (SSID)">
+                    <input type="password" id="wifi_pass" placeholder="Password">
+                    <select id="wifi_enc">
+                        <option value="WPA">WPA/WPA2</option>
+                        <option value="WEP">WEP</option>
+                        <option value="nopass">None</option>
+                    </select>
+                </div>
+
+                <div id="vcard" class="tab-content">
+                    <input type="text" id="vc_name" placeholder="Full Name">
+                    <input type="tel" id="vc_phone" placeholder="Phone Number">
+                    <input type="email" id="vc_email" placeholder="Email Address">
+                    <input type="text" id="vc_company" placeholder="Company">
+                </div>
+
+                <div id="text" class="tab-content">
+                    <textarea id="input_text" rows="5" placeholder="Enter your text here..."></textarea>
+                </div>
+
+                <div id="sms" class="tab-content">
+                    <input type="tel" id="sms_phone" placeholder="Phone Number">
+                    <textarea id="sms_msg" rows="3" placeholder="Message"></textarea>
+                </div>
+
+                <button onclick="generateQR()" class="btn btn-primary">
+                    Generate QR Code
+                </button>
+            </div>
+
+            <!-- Right Side - Preview -->
+            <div class="preview-area">
+                <div id="qrcode"></div>
+                
+                <div id="actionButtons" class="action-buttons">
+                    <button onclick="downloadQR()" class="btn" style="background:#16a34a; color:white; flex:1;">
+                        <i data-lucide="download"></i> Download
+                    </button>
+                    <button onclick="copyToClipboard()" class="btn" style="background:#475569; color:white; flex:1;">
+                        <i data-lucide="copy"></i> Copy
+                    </button>
+                    <button onclick="shareQR()" class="btn" style="background:#6366f1; color:white; flex:1;">
+                        <i data-lucide="share-2"></i> Share
+                    </button>
+                </div>
+
+                <p id="placeholderText" style="color:#64748b; font-style:italic; margin-top:25px;">
+                    Generate a code to see preview
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        Application by <strong style="color:#3b82f6;">Subir Datta</strong>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        let currentTab = 'url';
+
+        function openTab(evt, tabName) {
+            currentTab = tabName;
+
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        function generateQR() {
+            let data = "";
+
+            switch(currentTab) {
+                case 'url':
+                    data = document.getElementById('input_url').value.trim();
+                    break;
+                case 'wifi':
+                    const ssid = document.getElementById('wifi_ssid').value.trim();
+                    const pass = document.getElementById('wifi_pass').value.trim();
+                    const enc = document.getElementById('wifi_enc').value;
+                    data = `WIFI:S:${ssid};T:${enc};P:${pass};;`;
+                    break;
+                case 'vcard':
+                    const name = document.getElementById('vc_name').value.trim();
+                    const phone = document.getElementById('vc_phone').value.trim();
+                    const email = document.getElementById('vc_email').value.trim();
+                    const company = document.getElementById('vc_company').value.trim();
+                    data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${company}\nEND:VCARD`;
+                    break;
+                case 'text':
+                    data = document.getElementById('input_text').value.trim();
+                    break;
+                case 'sms':
+                    const smsPhone = document.getElementById('sms_phone').value.trim();
+                    const smsMsg = document.getElementById('sms_msg').value.trim();
+                    data = `SMSTO:${smsPhone}:${smsMsg}`;
+                    break;
+            }
+
+            if (!data) {
+                alert("Please enter some data first!");
+                return;
+            }
+
+            const container = document.getElementById("qrcode");
+            container.innerHTML = "";
+
+            const qrColor = document.getElementById('qrColor').value;
+            const bgColor = document.getElementById('bgColor').value;
+
+            new QRCode(container, {
+                text: data,
+                width: 260,
+                height: 260,
+                colorDark: qrColor,
+                colorLight: bgColor,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            document.getElementById('actionButtons').style.display = 'flex';
+            document.getElementById('placeholderText').style.display = 'none';
+        }
+
+        function downloadQR() {
+            const img = document.querySelector('#qrcode img');
+            if (!img) return;
+            const link = document.createElement('a');
+            link.download = 'qrcode.png';
+            link.href = img.src;
+            link.click();
+        }
+
+        async function copyToClipboard() {
+            const img = document.querySelector('#qrcode img');
+            if (!img) return;
+            try {
+                const response = await fetch(img.src);
+                const blob = await response.blob();
+                await navigator.clipboard.write([new ClipboardItem({'image/png': blob})]);
+                alert("QR Code copied to clipboard!");
+            } catch (err) {
+                alert("Could not copy to clipboard.");
+            }
+        }
+
+        // ================== NEW SHARE FUNCTION ==================
+        async function shareQR() {
+            const img = document.querySelector('#qrcode img');
+            if (!img) return;
+
+            try {
+                const response = await fetch(img.src);
+                const blob = await response.blob();
+                const file = new File([blob], 'qrcode.png', { type: 'image/png' });
+
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        files: [file],
+                        title: 'My QR Code',
+                        text: 'Generated with QR Studio'
+                    });
+                } else {
+                    alert("Sharing is not supported on this browser.");
+                }
+            } catch (error) {
+                console.error('Share failed:', error);
+                alert("Failed to share QR Code.");
+            }
+        }
+        // =======================================================
+
+        // Theme Toggle
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            lucide.createIcons();
+        });
+
+        window.onload = () => lucide.createIcons();
+    </script>
+</body>
+</html>
