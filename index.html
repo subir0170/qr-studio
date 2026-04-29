@@ -8,12 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8fafc;
@@ -24,27 +19,23 @@
             flex-direction: column;
             transition: all 0.4s;
         }
-
         .dark body {
             background-color: #0f172a;
             color: #e2e8f0;
         }
-
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            flex: 1;                    /* This pushes footer to bottom */
+            flex: 1;
             display: flex;
             flex-direction: column;
         }
-
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 40px;
         }
-
         .logo {
             display: flex;
             align-items: center;
@@ -52,20 +43,15 @@
             font-size: 28px;
             font-weight: 700;
         }
-
         .main-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
-            flex: 1;                    /* Takes available space */
+            flex: 1;
         }
-
         @media (min-width: 992px) {
-            .main-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .main-grid { grid-template-columns: 1fr 1fr; }
         }
-
         .card {
             background: white;
             border-radius: 24px;
@@ -73,44 +59,35 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             border: 1px solid #e2e8f0;
         }
-
         .dark .card {
             background: #1e2937;
             border-color: #334155;
         }
-
         .tabs {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 18px;
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 15px;
             margin-bottom: 25px;
+            overflow-x: auto;
         }
-
-        .dark .tabs {
-            border-color: #334155;
-        }
-
+        .dark .tabs { border-color: #334155; }
         .tab-btn {
             background: none;
             border: none;
             font-size: 16px;
             font-weight: 600;
-            padding: 8px 20px;
+            padding: 8px 18px;
             cursor: pointer;
             color: #64748b;
             position: relative;
+            white-space: nowrap;
         }
-
-        .dark .tab-btn {
-            color: #94a3b8;
-        }
-
+        .dark .tab-btn { color: #94a3b8; }
         .tab-btn.active {
             color: #3b82f6;
         }
-
         .tab-btn.active::after {
             content: '';
             position: absolute;
@@ -120,7 +97,6 @@
             height: 3px;
             background: #3b82f6;
         }
-
         input, select, textarea {
             width: 100%;
             padding: 14px 18px;
@@ -129,37 +105,23 @@
             font-size: 16px;
             margin-bottom: 16px;
         }
-
         .dark input, .dark select, .dark textarea {
             background: #334155;
             border-color: #475569;
             color: #e2e8f0;
         }
-
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #3b82f6;
         }
-
         .color-options {
             display: flex;
             gap: 20px;
             margin-bottom: 25px;
             flex-wrap: wrap;
         }
-
-        .color-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .color-label {
-            font-weight: 600;
-            font-size: 15px;
-            min-width: 110px;
-        }
-
+        .color-group { display: flex; align-items: center; gap: 10px; }
+        .color-label { font-weight: 600; font-size: 15px; min-width: 110px; }
         .color-input {
             width: 55px;
             height: 55px;
@@ -170,30 +132,17 @@
             background: white;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+        .dark .color-input { background: #334155; }
+        .color-input::-webkit-color-swatch { border: none; border-radius: 50%; }
 
-        .dark .color-input {
-            background: #334155;
-        }
-
-        .color-input::-webkit-color-swatch {
-            border: none;
-            border-radius: 50%;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
         #qrcode img {
             border: 14px solid white;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
         }
-
         .preview-area {
             background: #f1f5f9;
             border: 3px dashed #cbd5e1;
@@ -205,12 +154,10 @@
             align-items: center;
             justify-content: center;
         }
-
         .dark .preview-area {
             background: #1e2937;
             border-color: #475569;
         }
-
         .btn {
             padding: 14px 24px;
             border: none;
@@ -223,7 +170,6 @@
             justify-content: center;
             gap: 8px;
         }
-
         .btn-primary {
             background: #3b82f6;
             color: white;
@@ -231,9 +177,6 @@
             margin-top: 20px;
             font-size: 18px;
         }
-
-        .btn-primary:hover { background: #2563eb; }
-
         .action-buttons {
             display: none;
             gap: 10px;
@@ -241,17 +184,14 @@
             max-width: 340px;
             margin-top: 25px;
         }
-
-        /* Fixed Footer */
         footer {
-            margin-top: auto;           /* Pushes footer to bottom */
+            margin-top: auto;
             text-align: center;
-            padding: 40px 0;
+            padding: 30px 0;
             color: #64748b;
             font-size: 14px;
             border-top: 1px solid #e2e8f0;
         }
-
         .dark footer {
             color: #94a3b8;
             border-top-color: #334155;
@@ -272,8 +212,6 @@
         </header>
 
         <div class="main-grid">
-            
-            <!-- Left Side -->
             <div class="card">
                 <div class="tabs">
                     <button class="tab-btn active" onclick="openTab(event, 'url')">Link</button>
@@ -281,6 +219,10 @@
                     <button class="tab-btn" onclick="openTab(event, 'vcard')">Contact</button>
                     <button class="tab-btn" onclick="openTab(event, 'text')">Text</button>
                     <button class="tab-btn" onclick="openTab(event, 'sms')">SMS</button>
+                    <button class="tab-btn" onclick="openTab(event, 'email')">Email</button>
+                    <button class="tab-btn" onclick="openTab(event, 'phone')">Phone</button>
+                    <button class="tab-btn" onclick="openTab(event, 'location')">Location</button>
+                    <button class="tab-btn" onclick="openTab(event, 'event')">Event</button>
                 </div>
 
                 <div class="color-options">
@@ -294,6 +236,7 @@
                     </div>
                 </div>
 
+                <!-- Tabs Content -->
                 <div id="url" class="tab-content active">
                     <input type="url" id="input_url" placeholder="https://example.com">
                 </div>
@@ -324,12 +267,36 @@
                     <textarea id="sms_msg" rows="3" placeholder="Message"></textarea>
                 </div>
 
+                <div id="email" class="tab-content">
+                    <input type="email" id="email_address" placeholder="Receiver Email">
+                    <input type="text" id="email_subject" placeholder="Subject (Optional)">
+                    <textarea id="email_body" rows="4" placeholder="Message (Optional)"></textarea>
+                </div>
+
+                <div id="phone" class="tab-content">
+                    <input type="tel" id="phone_number" placeholder="Phone Number with country code">
+                </div>
+
+                <div id="location" class="tab-content">
+                    <input type="text" id="location_address" placeholder="Address or Place Name">
+                    <input type="text" id="latitude" placeholder="Latitude (Optional)">
+                    <input type="text" id="longitude" placeholder="Longitude (Optional)">
+                </div>
+
+                <div id="event" class="tab-content">
+                    <input type="text" id="event_title" placeholder="Event Title *">
+                    <input type="datetime-local" id="event_start">
+                    <input type="datetime-local" id="event_end">
+                    <input type="text" id="event_location" placeholder="Venue">
+                    <textarea id="event_desc" rows="3" placeholder="Description (Optional)"></textarea>
+                </div>
+
                 <button onclick="generateQR()" class="btn btn-primary">
                     Generate QR Code
                 </button>
             </div>
 
-            <!-- Right Side -->
+            <!-- Preview Area -->
             <div class="preview-area">
                 <div id="qrcode"></div>
                 
@@ -352,20 +319,19 @@
         </div>
     </div>
 
-    <!-- Fixed Footer -->
     <footer>
         Application by <strong style="color:#3b82f6;">Subir Datta</strong>
     </footer>
 
     <script>
         lucide.createIcons();
-
         let currentTab = 'url';
 
         function openTab(evt, tabName) {
             currentTab = tabName;
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
             document.getElementById(tabName).classList.add('active');
             evt.currentTarget.classList.add('active');
         }
@@ -374,13 +340,17 @@
             let data = "";
 
             switch(currentTab) {
-                case 'url': data = document.getElementById('input_url').value.trim(); break;
+                case 'url':
+                    data = document.getElementById('input_url').value.trim();
+                    break;
+
                 case 'wifi':
                     const ssid = document.getElementById('wifi_ssid').value.trim();
                     const pass = document.getElementById('wifi_pass').value.trim();
                     const enc = document.getElementById('wifi_enc').value;
                     data = `WIFI:S:${ssid};T:${enc};P:${pass};;`;
                     break;
+
                 case 'vcard':
                     const name = document.getElementById('vc_name').value.trim();
                     const phone = document.getElementById('vc_phone').value.trim();
@@ -388,18 +358,62 @@
                     const company = document.getElementById('vc_company').value.trim();
                     data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${company}\nEND:VCARD`;
                     break;
+
                 case 'text':
                     data = document.getElementById('input_text').value.trim();
                     break;
+
                 case 'sms':
                     const smsPhone = document.getElementById('sms_phone').value.trim();
                     const smsMsg = document.getElementById('sms_msg').value.trim();
                     data = `SMSTO:${smsPhone}:${smsMsg}`;
                     break;
+
+                case 'email':
+                    const e = document.getElementById('email_address').value.trim();
+                    if (!e) { alert("Please enter email address!"); return; }
+                    const sub = document.getElementById('email_subject').value.trim();
+                    const body = document.getElementById('email_body').value.trim();
+                    data = `mailto:${e}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+                    break;
+
+                case 'phone':
+                    const p = document.getElementById('phone_number').value.trim();
+                    if (!p) { alert("Please enter phone number!"); return; }
+                    data = `tel:${p}`;
+                    break;
+
+                case 'location':
+                    const addr = document.getElementById('location_address').value.trim();
+                    const lat = document.getElementById('latitude').value.trim();
+                    const lon = document.getElementById('longitude').value.trim();
+                    if (!addr && !(lat && lon)) {
+                        alert("Please enter address or coordinates!");
+                        return;
+                    }
+                    data = (lat && lon) ? `geo:${lat},${lon}` : `https://maps.google.com/?q=${encodeURIComponent(addr)}`;
+                    break;
+
+                case 'event':
+                    const title = document.getElementById('event_title').value.trim();
+                    const start = document.getElementById('event_start').value;
+                    if (!title || !start) {
+                        alert("Event Title and Start time are required!");
+                        return;
+                    }
+                    const end = document.getElementById('event_end').value || start;
+                    const venue = document.getElementById('event_location').value.trim();
+                    const desc = document.getElementById('event_desc').value.trim();
+
+                    const startFormatted = start.replace(/[-:]/g, '') + "00";
+                    const endFormatted = end.replace(/[-:]/g, '') + "00";
+
+                    data = `BEGIN:VEVENT\nSUMMARY:${title}\nDTSTART:${startFormatted}\nDTEND:${endFormatted}\nLOCATION:${venue}\nDESCRIPTION:${desc}\nEND:VEVENT`;
+                    break;
             }
 
             if (!data) {
-                alert("Please enter some data first!");
+                alert("Please fill the required fields!");
                 return;
             }
 
@@ -451,15 +465,10 @@
                 const response = await fetch(img.src);
                 const blob = await response.blob();
                 const file = new File([blob], 'qrcode.png', { type: 'image/png' });
-
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({
-                        files: [file],
-                        title: 'My QR Code',
-                        text: 'Generated with QR Studio'
-                    });
+                    await navigator.share({ files: [file], title: 'My QR Code' });
                 } else {
-                    alert("Sharing is not supported on this browser.");
+                    alert("Sharing not supported on this device.");
                 }
             } catch (error) {
                 alert("Failed to share QR Code.");
