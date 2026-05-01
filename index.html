@@ -337,13 +337,24 @@
         let selectedIconUrl = null;
 
         const iconList = [
-            {id: "none", icon: "fas fa-ban"},
-            {id: "whatsapp", icon: "fab fa-whatsapp", url: "https://cdn.simpleicons.org/whatsapp/25D366"},
-            {id: "facebook", icon: "fab fa-facebook", url: "https://cdn.simpleicons.org/facebook/1877F2"},
-            {id: "youtube", icon: "fab fa-youtube", url: "https://cdn.simpleicons.org/youtube/FF0000"},
-            {id: "instagram", icon: "fab fa-instagram", url: "https://cdn.simpleicons.org/instagram/E4405F"},
-            {id: "github", icon: "fab fa-github", url: "https://cdn.simpleicons.org/github/000000"}
-        ];
+    {id: "none", icon: "fas fa-ban"},
+    {id: "whatsapp", icon: "fab fa-whatsapp", url: "https://cdn.simpleicons.org/whatsapp/25D366"},
+    {id: "facebook", icon: "fab fa-facebook", url: "https://cdn.simpleicons.org/facebook/1877F2"},
+    {id: "youtube", icon: "fab fa-youtube", url: "https://cdn.simpleicons.org/youtube/FF0000"},
+    {id: "instagram", icon: "fab fa-instagram", url: "https://cdn.simpleicons.org/instagram/E4405F"},
+    {id: "github", icon: "fab fa-github", url: "https://cdn.simpleicons.org/github/000000"},
+    // নতুন আইকনগুলো নিচে দেওয়া হলো:
+    {id: "x", icon: "fab fa-x-twitter", url: "https://cdn.simpleicons.org/x/000000"},
+    {id: "linkedin", icon: "fab fa-linkedin", url: "https://cdn.simpleicons.org/linkedin/0A66C2"},
+    {id: "tiktok", icon: "fab fa-tiktok", url: "https://cdn.simpleicons.org/tiktok/000000"},
+    {id: "telegram", icon: "fab fa-telegram", url: "https://cdn.simpleicons.org/telegram/26A5E4"},
+    {id: "discord", icon: "fab fa-discord", url: "https://cdn.simpleicons.org/discord/5865F2"},
+    {id: "snapchat", icon: "fab fa-snapchat", url: "https://cdn.simpleicons.org/snapchat/FFFC00"},
+    {id: "pinterest", icon: "fab fa-pinterest", url: "https://cdn.simpleicons.org/pinterest/E60023"},
+    {id: "spotify", icon: "fab fa-spotify", url: "https://cdn.simpleicons.org/spotify/1DB954"}
+];
+
+       
 
         function createIconGrid() {
             const grid = document.getElementById('iconGrid');
@@ -353,7 +364,7 @@
                 div.className = `icon-item ${item.id === 'none' ? 'active' : ''}`;
                 div.innerHTML = `<i class="${item.icon}"></i>`;
                 div.onclick = () => {
-                    document.querySelectorAll('.icon-item').forEach(i => i.classList.remove('active'));
+                    document.querySelectorAll('.icon-item').forEach(i => i.classList.remove('active')); 
                     div.classList.add('active');
                     selectedIconUrl = item.url || null;
                 };
